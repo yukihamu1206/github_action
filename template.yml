@@ -38,6 +38,7 @@ Resources:
       CodeUri: ./
       Handler: src/handlers/index.handler
       Runtime: nodejs10.x
+      Role: arn:aws:iam::968525956953:role/githubActions
       MemorySize: 128
       Timeout: 60
       Description: connected to branch
