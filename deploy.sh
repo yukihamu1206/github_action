@@ -1,4 +1,4 @@
 #!/bin/bash
 
 sam build --use-container
-sam deploy --guided
+sam deploy 
