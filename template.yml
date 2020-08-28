@@ -53,7 +53,7 @@ Resources:
             RestApiId: !Ref test
 
   test:
-    Type: AWS::Serverless::Api
+    Type: AWS::ApiGateway::Stage
     Properties:
      StageName: Prod
 
