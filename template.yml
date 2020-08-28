@@ -41,7 +41,7 @@ Resources:
       Role: arn:aws:iam::968525956953:role/githubActions
       MemorySize: 128
       Timeout: 60
-      Description: connected to branch
+      Description: connected to master
       Policies:
         - AmazonAPIGatewayInvokeFullAccess
       Events:
