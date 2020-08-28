@@ -6,8 +6,9 @@ name: AWS SAM deploy to production
 # events but only for the master branch
 on:
   push:
-    branches: master
-    branches: develop
+    branches: 
+     - master
+     - develop
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   deploy:
@@ -31,7 +32,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-leu-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
