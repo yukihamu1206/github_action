@@ -50,14 +50,14 @@ Resources:
           Properties:
             Path: /
             Method: get
-            RestApiId: !Ref sam-app-stg
+            RestApiId: !Ref samAppStg
 
-  sam-app:
+  samApp:
     Type: AWS::Serverless::Api
 
   sam-app-stg: 
     Type: AWS::ApiGateway::Stage
-    RestApiId: !Ref sam-app
+    RestApiId: !Ref samApp
     StageName: Prod
 
 
