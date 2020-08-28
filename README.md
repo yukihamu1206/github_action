@@ -1,2 +1,2 @@
 # github_action
-test for github action
+github actionを試すためのリポジトリ
