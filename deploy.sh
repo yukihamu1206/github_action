@@ -1,4 +1,5 @@
 #!/bin/bash
 
 sam build --use-container
-sam deploy --guided
+sam deploy --guided \
+ --stack-name sam-app-sample
