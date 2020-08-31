@@ -1,3 +1,4 @@
+
 # This is the SAM template that represents the architecture of your serverless application
 # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
 
@@ -5,8 +6,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  this is master
-
+  master branch
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform: AWS::Serverless-2016-10-31
@@ -32,7 +32,7 @@ Resources:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
   # This is a Lambda function config associated with the source code: index.js
-  MasterFunction:
+  ProdFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./
@@ -41,74 +41,19 @@ Resources:
       Role: arn:aws:iam::968525956953:role/githubActions
       MemorySize: 128
       Timeout: 60
-      Description: connected to master
+      Description: connected to production branch
       Policies:
         - AmazonAPIGatewayInvokeFullAccess
-      Role: !GetAtt SampleFunctionRole.Arn
       Events:
         ApiEvent:
           Type: Api
           Properties:
             Path: /
             Method: get
+            RestApiId: !Ref ProdApi
 
-  # # lambda role
-  # SampleFunctionRole:
-  #   Type: "AWS::IAM::Role"
-  #   Properties:
-  #    AssumeRolePolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: "Allow"
-  #           Principal:
-  #             Service: "lambda.amazonaws.com"
-  #           Action: 
-  #             - "sts:AssumeRole"
-  #     Policies:
-  #       - PolicyName: "SampleFunction1Policy"
-  #         PolicyDocument:
-  #           Version: "2012-10-17"
-  #           Statement:
-  #             - Effect: "Allow"
-  #               Action:
-  #                 - logs:CreateLogGroup
-  #                 - logs:CreateLogStream
-  #                 - logs:PutLogEvents
-  #               Resource: "*"
-
-  # API Gateway
-  sampleApi:
-    Type: 'AWS::ApiGateway::RestApi'
-    Properties: 
-      Body:
-        Method: get
-        path: "/"
-            get:
-               x-amazon-apigateway-integration:
-                httpMethod: POST  # 統合リクエストで使用されるHTTP メソッド。Lambdaの場合はPOSTを指定
-                type: aws_proxy   # Lambdaプロキシ統合
-                uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SampleFunction1.Arn}/invocations"
-          
-
-  sampleApiPermission:
-     Type: 'AWS::Lambda::Permission'
-     Properties:
-      Action: 'lambda:invokeFunction'
-      Principal: apigateway.amazonaws.com
-      FunctionName: !Ref MasterFunction
-
-  ProdStage:
-     Type: 'AWS::ApiGateway::Stage'
-     Properties:
-     DeploymentId: !Ref RestApiDeploy
-     RestApiId: !Ref sampleApi
+  ProdApi:
+    Type: AWS::Serverless::Api
+    Properties:
      StageName: Prod
-
-  SampleRestApi1Deploy:
-     Type: 'AWS::ApiGateway::Deployment'
-     Properties:
-       RestApiId: !Ref SampleApi
-       StageName: Prod
-
-
-
+     
