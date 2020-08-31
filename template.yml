@@ -44,21 +44,71 @@ Resources:
       Description: connected to master
       Policies:
         - AmazonAPIGatewayInvokeFullAccess
+      Role: !GetAtt SampleFunctionRole.Arn
       Events:
         ApiEvent:
           Type: Api
           Properties:
             Path: /
             Method: get
-            RestApiId: !Ref samAppStg
 
-  samApp:
-    Type: AWS::Serverless::Api
+  # lambda role
+  SampleFunctionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+     RoleName: SampleFunctionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "lambda.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: "SampleFunction1Policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
 
-  sam-app-stg: 
-    Type: AWS::ApiGateway::Stage
-    RestApiId: !Ref samApp
-    StageName: Prod
+  # API Gateway
+  sampleApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties: 
+      Body:
+        paths:
+          /:
+            get:
+               x-amazon-apigateway-integration:
+                httpMethod: POST  # 統合リクエストで使用されるHTTP メソッド。Lambdaの場合はPOSTを指定
+                type: aws_proxy   # Lambdaプロキシ統合
+                uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SampleFunction1.Arn}/invocations"
+              responses: {}
+
+  sampleApiPermission:
+     Type: 'AWS::Lambda::Permission'
+     Properties:
+      Action: 'lambda:invokeFunction'
+      Principal: apigateway.amazonaws.com
+      FunctionName: !Ref MasterFunction
+
+  ProdStage:
+     Type: 'AWS::ApiGateway::Stage'
+     Properties:
+     DeploymentId: !Ref RestApiDeploy
+     RestApiId: !Ref sampleApi
+     StageName: Prod
+
+  SampleRestApi1Deploy:
+     Type: 'AWS::ApiGateway::Deployment'
+     Properties:
+       RestApiId: !Ref SampleApi
+       StageName: Prod
 
 
 
