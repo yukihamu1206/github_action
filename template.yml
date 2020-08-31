@@ -81,14 +81,14 @@ Resources:
     Type: 'AWS::ApiGateway::RestApi'
     Properties: 
       Body:
-        paths:
-          /:
+        Method: get
+        path: "/"
             get:
                x-amazon-apigateway-integration:
                 httpMethod: POST  # 統合リクエストで使用されるHTTP メソッド。Lambdaの場合はPOSTを指定
                 type: aws_proxy   # Lambdaプロキシ統合
                 uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SampleFunction1.Arn}/invocations"
-              responses: {}
+          
 
   sampleApiPermission:
      Type: 'AWS::Lambda::Permission'
