@@ -7,5 +7,5 @@ sam package \
 
 sam deploy \
     --template-file packaged.yaml \
-    --stack-name sam-app \
+    --stack-name sam-master \
     --capabilities CAPABILITY_IAM
