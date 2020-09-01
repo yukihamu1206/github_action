@@ -21,28 +21,28 @@ Globals:
     # More information in https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
     PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary'
 
-Parameters:
-  Env:
-    Type: String
-    AllowedValues:
-      - production
-      - development
-    Default: development
+# Parameters:
+#   Env:
+#     Type: String
+#     AllowedValues:
+#       - production
+#       - development
+#     Default: development
 
-Mappings:
-  EnvMap:
-    development:
-      Function: 'developmentFunction'
-      Handler: 'src/handlers/development.handler'
-      Description: 'connected to development branch'
-      Api: 'developmentApi'
-      StageName: 'development'
-    production:
-      Function: 'productionFunction'
-      Handler: 'src/handlers/production.handler'
-      Description: 'connected to production branch'
-      Api: 'productionApi'
-      StageName: 'production'
+# Mappings:
+#   EnvMap:
+#     development:
+#       Function: 'developmentFunction'
+#       Handler: 'src/handlers/development.handler'
+#       Description: 'connected to development branch'
+#       Api: 'developmentApi'
+#       StageName: 'development'
+#     production:
+#       Function: 'productionFunction'
+#       Handler: 'src/handlers/production.handler'
+#       Description: 'connected to production branch'
+#       Api: 'productionApi'
+#       StageName: 'production'
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
