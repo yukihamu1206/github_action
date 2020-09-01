@@ -27,7 +27,7 @@ Parameters:
     AllowedValues:
       - production
       - development
-    default: development
+    Default: development
 
 Mappings:
   EnvMap:
@@ -80,4 +80,4 @@ Resources:
     developmentApi:
     Type: AWS::Serverless::Api
     Properties:
-     StageName: development
+     StageName: !FindInMap [ EnvMap, !Ref Env, StageName ]
