@@ -32,20 +32,17 @@ Parameters:
 Mappings:
   EnvMap:
     development:
-      Function: "developmentFunction"
-      Handler: "src/handlers/development.handler"
-      Description: "connected to development branch"
-      Api: "developmentApi"
-      StageName: "development"
+      Function: 'developmentFunction'
+      Handler: 'src/handlers/development.handler'
+      Description: 'connected to development branch'
+      Api: 'developmentApi'
+      StageName: 'development'
     production:
-      Function: "productionFunction"
-      Handler: "src/handlers/production.handler"
-      Description: "connected to production branch"
-      Api: "productionApi"
-      StageName: "production"
-
-
-
+      Function: 'productionFunction'
+      Handler: 'src/handlers/production.handler'
+      Description: 'connected to production branch'
+      Api: 'productionApi'
+      StageName: 'production'
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
