@@ -55,12 +55,12 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./
-      Handler: !FindInMap [ EnvMap, !Ref Env, Handler ]
+      Handler: src/handlers/development.handler
       Runtime: nodejs10.x
       Role: arn:aws:iam::968525956953:role/githubActions
       MemorySize: 128
       Timeout: 60
-      Description: !FindInMap [ EnvMap, !Ref Env, Description ]
+      Description: connected to development branch
       Policies:
         - AmazonAPIGatewayInvokeFullAccess
       Events:
