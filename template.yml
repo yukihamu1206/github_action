@@ -29,6 +29,17 @@ Parameters:
       - development
     Default: development
 
+Mappings:
+  EnvMap:
+    production:
+      Handler: 'src/handlers/production.handler'
+      Description: 'connected to Master'
+      Api: 'productionApi'
+    production:
+      Handler: 'src/handlers/development.handler'
+      Description: 'connected to development branch'
+      Api: 'developmentApi'
+
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
