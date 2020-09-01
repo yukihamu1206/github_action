@@ -32,10 +32,12 @@ Parameters:
 Mappings:
   EnvMap:
     production:
+      Function: 'productionFunction'
       Handler: 'src/handlers/production.handler'
       Description: 'connected to Master'
       Api: 'productionApi'
     production:
+      Function: 'developmentFunction'
       Handler: 'src/handlers/development.handler'
       Description: 'connected to development branch'
       Api: 'developmentApi'
