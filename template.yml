@@ -72,7 +72,7 @@ Resources:
           Properties:
             Path: /
             Method: get
-            RestApiId: !Ref !FindInMap [ EnvMap, !Ref Env, Api ]
+            RestApiId: !FindInMap [ EnvMap, !Ref Env, Api ]
 
   !FindInMap [ EnvMap, !Ref Env, Api ]:
     Type: AWS::Serverless::Api
