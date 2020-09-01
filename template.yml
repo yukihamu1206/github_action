@@ -21,9 +21,13 @@ Globals:
     PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary'
 
 
-# Parameters:
-#   AppId:
-#     Type: String
+Parameters:
+  Env:
+    Type: String
+    AllowedValues:
+      - production
+      - development
+    Default: development
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
