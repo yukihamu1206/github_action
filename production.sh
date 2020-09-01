@@ -7,6 +7,6 @@ sam package \
 
 sam deploy \
     --template-file packaged.yaml \
-    --stack-name sam-development \
+    --stack-name sam-production \
     --capabilities CAPABILITY_IAM \
     --parameter-overrides Env=production
