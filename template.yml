@@ -69,10 +69,15 @@ Resources:
           Properties:
             Path: /
             Method: get
-            RestApiId: !FindInMap [ EnvMap, !Ref Env, Api ]
+            RestApiId: !Ref developmentApi
+  #           RestApiId: !FindInMap [ EnvMap, !Ref Env, Api ]
 
-  !FindInMap [ EnvMap, !Ref Env, Api ]:
+  # !FindInMap [ EnvMap, !Ref Env, Api ]:
+  #   Type: AWS::Serverless::Api
+  #   Properties:
+  #    StageName: !FindInMap [ EnvMap, !Ref Env, StageNamei ]
+     
+    developmentApi:
     Type: AWS::Serverless::Api
     Properties:
-     StageName: !FindInMap [ EnvMap, !Ref Env, StageNamei ]
-     
+     StageName: development
