@@ -1,4 +1,3 @@
-
 # This is the SAM template that represents the architecture of your serverless application
 # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-template-basics.html
 
@@ -22,27 +21,8 @@ Globals:
     PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary'
 
 # Parameters:
-#   Env:
+#   AppId:
 #     Type: String
-#     AllowedValues:
-#       - production
-#       - development
-#     Default: development
-
-# Mappings:
-#   EnvMap:
-#     development:
-#       Function: 'developmentFunction'
-#       Handler: 'src/handlers/development.handler'
-#       Description: 'connected to development branch'
-#       Api: 'developmentApi'
-#       StageName: 'development'
-#     production:
-#       Function: 'productionFunction'
-#       Handler: 'src/handlers/production.handler'
-#       Description: 'connected to production branch'
-#       Api: 'productionApi'
-#       StageName: 'production'
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
@@ -70,14 +50,8 @@ Resources:
             Path: /
             Method: get
             RestApiId: !Ref developmentApi
-  #           RestApiId: !FindInMap [ EnvMap, !Ref Env, Api ]
 
-  # !FindInMap [ EnvMap, !Ref Env, Api ]:
-  #   Type: AWS::Serverless::Api
-  #   Properties:
-  #    StageName: !FindInMap [ EnvMap, !Ref Env, StageNamei ]
-     
-    developmentApi:
+  developmentApi:
     Type: AWS::Serverless::Api
     Properties:
-     StageName: development
+     StageName: Development
