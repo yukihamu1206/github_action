@@ -6,7 +6,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  master branch
+  deploy app
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform: AWS::Serverless-2016-10-31
@@ -21,9 +21,31 @@ Globals:
     # More information in https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
     PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary'
 
-# Parameters:
-#   AppId:
-#     Type: String
+Parameters:
+  Env:
+    Type: String
+    AllowedValues:
+      - production
+      - development
+    default: development
+
+Mappings:
+  EnvMap:
+    development:
+      Function: "developmentFunction"
+      Handler: "src/handlers/development.handler"
+      Description: "connected to development branch"
+      Api: "developmentApi"
+      StageName: "development"
+    production:
+      Function: "productionFunction"
+      Handler: "src/handlers/production.handler"
+      Description: "connected to production branch"
+      Api: "productionApi"
+      StageName: "production"
+
+
+
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
@@ -32,16 +54,16 @@ Resources:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
   # This is a Lambda function config associated with the source code: index.js
-  ProdFunction:
+  !FindInMap [ EnvMap, !Ref Env, Function ]:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./
-      Handler: src/handlers/index.handler
+      Handler: !FindInMap [ EnvMap, !Ref Env, Handler ]
       Runtime: nodejs10.x
       Role: arn:aws:iam::968525956953:role/githubActions
       MemorySize: 128
       Timeout: 60
-      Description: connected to production branch
+      Description: !FindInMap [ EnvMap, !Ref Env, Description ]
       Policies:
         - AmazonAPIGatewayInvokeFullAccess
       Events:
@@ -50,10 +72,10 @@ Resources:
           Properties:
             Path: /
             Method: get
-            RestApiId: !Ref ProdApi
+            RestApiId: !Ref !FindInMap [ EnvMap, !Ref Env, Api ]
 
-  ProdApi:
+  !FindInMap [ EnvMap, !Ref Env, Api ]:
     Type: AWS::Serverless::Api
     Properties:
-     StageName: Prod
+     StageName: !FindInMap [ EnvMap, !Ref Env, StageNamei ]
      
