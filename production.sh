@@ -1,3 +1,3 @@
-sam build 
+sam build --template production.yml
 sam deploy --guided \
-    --template-file template/production.yml
+           --stack-name sam-production
