@@ -49,7 +49,7 @@ Resources:
           Properties:
             Path: /
             Method: get
-            RestApiId: !Ref productiontApi
+            RestApiId: !Ref productionApi
 
   productionApi:
     Type: AWS::Serverless::Api
