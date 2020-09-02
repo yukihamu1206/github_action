@@ -5,7 +5,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  deploy app
+  deploy development app
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform: AWS::Serverless-2016-10-31
@@ -19,28 +19,6 @@ Globals:
     # it has to be manually updated when you add resources to your application.
     # More information in https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
     PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary'
-
-
-Parameters:
-  Env:
-    Type: String
-    AllowedValues:
-      - production
-      - development
-    Default: development
-
-Mappings:
-  EnvMap:
-    production:
-      Function: 'productionFunction'
-      Handler: 'src/handlers/production.handler'
-      Description: 'connected to Master'
-      Api: 'productionApi'
-    production:
-      Function: 'developmentFunction'
-      Handler: 'src/handlers/development.handler'
-      Description: 'connected to development branch'
-      Api: 'developmentApi'
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
