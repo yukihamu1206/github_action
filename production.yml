@@ -5,7 +5,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  deploy production app
+  production app
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform: AWS::Serverless-2016-10-31
@@ -20,6 +20,10 @@ Globals:
     # More information in https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
     PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/${AppId}-${AWS::Region}-PermissionsBoundary'
 
+# Parameters:
+#   AppId:
+#     Type: String
+
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
@@ -27,7 +31,7 @@ Resources:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
 
   # This is a Lambda function config associated with the source code: index.js
-  productionFunction:
+  ProductionFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./
@@ -45,9 +49,9 @@ Resources:
           Properties:
             Path: /
             Method: get
-            RestApiId: !Ref productionApi
+            RestApiId: !Ref productiontApi
 
-  productiontApi:
+  productionApi:
     Type: AWS::Serverless::Api
     Properties:
      StageName: Production
