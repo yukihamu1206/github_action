@@ -1,2 +1,2 @@
-sam build --template template/development.yml
+sam build --template development.yml
 sam deploy --guided 
