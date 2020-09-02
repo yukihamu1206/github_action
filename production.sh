@@ -1,3 +1,5 @@
 sam build --template production.yml
-sam deploy --guided \
-           --stack-name sam-production
+sam deploy \
+     --stack-name sam-production \
+     --template-file production.yml \
+     --s3-bucket githubactionsiida
