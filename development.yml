@@ -35,7 +35,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ./
-      Handler: src/handlers/developmnet.handler
+      Handler: src/handlers/development.handler
       Runtime: nodejs10.x
       Role: arn:aws:iam::968525956953:role/githubActions
       MemorySize: 128
