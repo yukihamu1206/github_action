@@ -57,9 +57,6 @@ jobs:
           SLACK_MESSAGE: deployment failed 
           SLACK_TITLE: Message
           SLACK_COLOR: '#FF0000'
-          SLACK_ICON: https://uploda2.ysklog.net/a9b9fee22b68a11a422d1df72d80fcfb.png
-
-
 
 
           
