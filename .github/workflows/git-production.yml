@@ -37,4 +37,26 @@ jobs:
       - name: deploy production app
         run: bash production.sh
         shell: bash
+
+      - name: Slack Notify on success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.1.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: GithubActions
+          SLACK_MESSAGE: successfully deployed 
+          SLACK_TITLE: Message
+          SLACK_COLOR: '#008000'
+
+      - name: Slack Notify on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.1.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_USERNAME: GithubActions
+          SLACK_MESSAGE: deployment failed 
+          SLACK_TITLE: Message
+          SLACK_COLOR: '#FF0000'
+
+
           
