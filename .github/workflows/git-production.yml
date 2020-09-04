@@ -35,7 +35,7 @@ jobs:
           aws-region: ap-northeast-1
 
       - name: deploy production app
-        run: bash pro.sh
+        run: bash production.sh
         shell: bash
 
       - name: Slack Notify on success
